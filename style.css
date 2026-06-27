@@ -220,7 +220,7 @@ canvas {
 }
 
 .arrow-icon.close-state {
-    background-image: url('close-button.svg');
+    background-image: url('./icons/close-button.svg');
     transform: none !important;
 }
 
