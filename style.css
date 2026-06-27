@@ -203,7 +203,7 @@ canvas {
     display: inline-block;
     width: 1em;
     height: 1em;
-    background-image: url('Icon.svg');
+    background-image: url('icon.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -220,7 +220,7 @@ canvas {
 }
 
 .arrow-icon.close-state {
-    background-image: url('close button.svg');
+    background-image: url('close-button.svg');
     transform: none !important;
 }
 
