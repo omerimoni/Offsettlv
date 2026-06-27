@@ -13,7 +13,7 @@ function setup() {
     fft = new p5.FFT();
 
     // Load sound asynchronously so it doesn't block the sketch from starting
-    song = loadSound("Don't Stop 'Til You Get Enough (2003 Edit) [m_O25dOQpCQ].mp3",
+    song = loadSound("./song/Don't Stop 'Til You Get Enough (2003 Edit) [m_O25dOQpCQ].mp3",
         () => {
             console.log("🔊 Audio loaded successfully!");
             fft.setInput(song);
