@@ -203,7 +203,7 @@ canvas {
     display: inline-block;
     width: 1em;
     height: 1em;
-    background-image: url('icon.svg');
+    background-image: url('./icons/icon.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
