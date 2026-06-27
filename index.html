@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OFFSET — Disco Festival Tel Aviv</title>
+    <meta name="description"
+        content="OFFSET: A retro-futuristic disco music festival celebration of movement, sound, and escape in Tel Aviv on June 29, 2026.">
+
+    <!-- Design Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Import p5.js and sound addon via cdnjs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"></script>
+</head>
+
+<body>
+
+    <div class="page-wrapper">
+        <!-- 1. Header Grid Navigation -->
+        <nav class="header-grid" id="mainHeader">
+            <!-- Lineup Cell -->
+            <div class="header-cell cell-lineup interactive-cell" id="cellLineup">
+                <span>Lineup</span>
+                <span class="cell-arrow arrow-icon"></span>
+                <div class="dropdown-panel lineup-dropdown">
+                    <div class="dropdown-inner">
+                        <ul class="lineup-list">
+                            <li class="lineup-item"><a href="#editorialContent" class="lineup-link">TommyB
+                                    <span class="arrow-icon"></span></a></li>
+                            <li class="lineup-item"><a href="#editorialContent" class="lineup-link">Ariel Druker
+                                    <span class="arrow-icon"></span></a></li>
+                            <li class="lineup-item"><a href="#editorialContent" class="lineup-link">Ron Rimoni
+                                    <span class="arrow-icon"></span></a></li>
+                            <li class="lineup-item"><a href="#editorialContent" class="lineup-link">Gayush
+                                    <span class="arrow-icon"></span></a></li>
+                            <li class="lineup-item"><a href="#editorialContent" class="lineup-link">Shushu R
+                                    <span class="arrow-icon"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Schedule Cell -->
+            <div class="header-cell cell-schedule interactive-cell" id="cellSchedule">
+                <span>Schedule</span>
+                <span class="cell-arrow arrow-icon"></span>
+                <div class="dropdown-panel schedule-dropdown">
+                    <div class="dropdown-inner">
+                        <h4>June 29</h4>
+                        <div class="schedule-list">
+                            <div class="schedule-row">
+                                <span class="schedule-time">19:00</span>
+                                <span class="schedule-event">Doors Open</span>
+                            </div>
+                            <div class="schedule-row">
+                                <span class="schedule-time">19:30</span>
+                                <span class="schedule-event">Tommy B (Sunset Set)</span>
+                            </div>
+                            <div class="schedule-row">
+                                <span class="schedule-time">21:00</span>
+                                <span class="schedule-event">Ariel Druker (Warm Up)</span>
+                            </div>
+                            <div class="schedule-row">
+                                <span class="schedule-time">22:30</span>
+                                <span class="schedule-event">Ron Rimoni (Peak Energy)</span>
+                            </div>
+                            <div class="schedule-row">
+                                <span class="schedule-time">00:00</span>
+                                <span class="schedule-event">DJ Gayush (Midnight Set)</span>
+                            </div>
+                            <div class="schedule-row">
+                                <span class="schedule-time">01:30</span>
+                                <span class="schedule-event">Shushu R (After Hours)</span>
+                            </div>
+                            <div class="schedule-row">
+                                <span class="schedule-time">03:30</span>
+                                <span class="schedule-event">Special Closing Set</span>
+                            </div>
+                            <div class="schedule-row">
+                                <span class="schedule-time">05:30</span>
+                                <span class="schedule-event">Sunrise Session</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- About Cell -->
+            <div class="header-cell cell-about interactive-cell" id="cellAbout">
+                <span>About</span>
+                <span class="cell-arrow arrow-icon"></span>
+                <div class="dropdown-panel about-dropdown">
+                    <div class="dropdown-inner">
+                        <p class="dropdown-text">
+                            Set in the heart of Tel Aviv, OFFSET is a celebration of music, energy, and escape. Bringing
+                            people together through disco culture, the festival creates a space where everyday pressure
+                            disappears and the night becomes all about movement, freedom, and shared experience.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Community Cell -->
+            <div class="header-cell cell-community interactive-cell" id="Community">
+                <span>Community</span>
+                <span class="cell-arrow arrow-icon"></span>
+                <div class="dropdown-panel community-dropdown">
+                    <div class="dropdown-inner">
+                        <p class="dropdown-text">
+                            More than a festival, OFFSET is a gathering of people who live for movement, sound, and
+                            shared
+                            experiences. A community built around self-expression, connection, and the idea that
+                            sometimes
+                            all we need is one night to step away from routine and feel completely present.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Get Tickets Cell -->
+            <div class="header-cell cell-tickets" id="ticketsTrigger">
+                <span class="cell-tickets-text">Get Tickets</span>
+                <span class="cell-arrow arrow-icon" id="ticketsArrow"></span>
+            </div>
+        </nav>
+
+        <!-- 2. Tickets Drawer Overlay -->
+        <div class="tickets-drawer" id="ticketsDrawer">
+            <div>
+                <div class="tickets-header">
+                    <h3>Select Tickets</h3>
+                </div>
+                <div class="tickets-list">
+                    <!-- General Admission -->
+                    <div class="ticket-card" data-price="45">
+                        <div class="ticket-info">
+                            <h4>General Admission</h4>
+                            <p>Full access to the main arena, performances, and facilities.</p>
+                            <div class="ticket-price">₪45</div>
+                        </div>
+                        <div class="ticket-qty-control">
+                            <button class="qty-btn dec-btn">-</button>
+                            <span class="qty-val">0</span>
+                            <button class="qty-btn inc-btn">+</button>
+                        </div>
+                    </div>
+                    <!-- VIP Pass -->
+                    <div class="ticket-card" data-price="85">
+                        <div class="ticket-info">
+                            <h4>VIP Backstage Pass</h4>
+                            <p>VIP deck view, express entry lane, and dedicated drink bars.</p>
+                            <div class="ticket-price">₪85</div>
+                        </div>
+                        <div class="ticket-qty-control">
+                            <button class="qty-btn dec-btn">-</button>
+                            <span class="qty-val">0</span>
+                            <button class="qty-btn inc-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Total Summary -->
+            <div class="tickets-summary">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="summarySubtotal">₪0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Service Fee (10%)</span>
+                    <span id="summaryFee">₪0.00</span>
+                </div>
+                <div class="summary-row summary-total">
+                    <span>Total Cost</span>
+                    <span id="summaryTotal">₪0.00</span>
+                </div>
+                <button class="checkout-btn" id="checkoutBtn" disabled>Check Out</button>
+            </div>
+        </div>
+
+        <!-- 3. Hero Landing Area -->
+        <header class="hero-section grid-container">
+            <div class="col-12 hero-center">
+                <img src="logo/logo.png" alt="OFFSET Festival Logo" class="hero-logo">
+            </div>
+            <div class="col-12 hero-footer">
+                <div class="hero-info">
+                    <span>Disco festival Tel Aviv</span>
+                    <span class="festival-date">June 29, 2026</span>
+                </div>
+                <div class="audio-control-wrapper">
+                    <button class="audio-btn" id="audioToggleBtn">
+                        <span>Sound Off</span>
+                        <div class="sound-waves">
+                            <span class="wave"></span>
+                            <span class="wave"></span>
+                            <span class="wave"></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+    </div>
+
+    <!-- 5. Floating Slide-in Form Widget (contact us) -->
+    <div class="contact-widget" id="contactWidget">
+        <div class="widget-header">
+            <span>contact us</span>
+            <span class="arrow-icon"></span>
+        </div>
+        <div class="widget-body">
+            <a href="mailto:hello@offsettlv" class="contact-email">hello@offsettlv</a>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" id="name" required placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" required placeholder="How can we help?"></textarea>
+                </div>
+                <button type="submit" class="form-submit-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Background Canvas Sketch -->
+    <script src="sketch.js"></script>
+
+    <!-- UI State & Event Managers -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // A. Get Tickets Toggle
+            const ticketsTrigger = document.getElementById('ticketsTrigger');
+            const ticketsArrow = document.getElementById('ticketsArrow');
+            const ticketsDrawer = document.getElementById('ticketsDrawer');
+
+            ticketsTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                ticketsDrawer.classList.toggle('open');
+                ticketsTrigger.classList.toggle('active');
+                if (ticketsDrawer.classList.contains('open')) {
+                    ticketsArrow.classList.add('close-state');
+                    ticketsArrow.textContent = '';
+                } else {
+                    ticketsArrow.classList.remove('close-state');
+                    ticketsArrow.textContent = '';
+                }
+            });
+
+            // Close Drawer when clicking outside
+            document.addEventListener('click', (e) => {
+                if (ticketsDrawer.classList.contains('open') &&
+                    !ticketsDrawer.contains(e.target) &&
+                    !ticketsTrigger.contains(e.target)) {
+                    ticketsDrawer.classList.remove('open');
+                    ticketsTrigger.classList.remove('active');
+                    ticketsArrow.classList.remove('close-state');
+                    ticketsArrow.textContent = '';
+                }
+            });
+
+            // B. Ticket Calculations
+            const ticketCards = document.querySelectorAll('.ticket-card');
+            const summarySubtotal = document.getElementById('summarySubtotal');
+            const summaryFee = document.getElementById('summaryFee');
+            const summaryTotal = document.getElementById('summaryTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+
+            let quantities = [0, 0]; // ga = index 0, vip = index 1
+            const prices = [45, 85];
+
+            function updateSummary() {
+                const subtotal = (quantities[0] * prices[0]) + (quantities[1] * prices[1]);
+                const fee = subtotal * 0.10;
+                const total = subtotal + fee;
+
+                summarySubtotal.textContent = `₪${subtotal.toFixed(2)}`;
+                summaryFee.textContent = `₪${fee.toFixed(2)}`;
+                summaryTotal.textContent = `₪${total.toFixed(2)}`;
+
+                if (total > 0) {
+                    checkoutBtn.removeAttribute('disabled');
+                } else {
+                    checkoutBtn.setAttribute('disabled', 'true');
+                }
+            }
+
+            ticketCards.forEach((card, index) => {
+                const decBtn = card.querySelector('.dec-btn');
+                const incBtn = card.querySelector('.inc-btn');
+                const qtyVal = card.querySelector('.qty-val');
+
+                decBtn.addEventListener('click', () => {
+                    if (quantities[index] > 0) {
+                        quantities[index]--;
+                        qtyVal.textContent = grandfather_qty(index);
+                        updateSummary();
+                    }
+                });
+
+                function grandfather_qty(i) {
+                    return quantities[i];
+                }
+
+                incBtn.addEventListener('click', () => {
+                    quantities[index]++;
+                    qtyVal.textContent = quantities[index];
+                    updateSummary();
+                });
+            });
+
+            checkoutBtn.addEventListener('click', () => {
+                alert(`Thank you for purchasing! Total tickets: ${quantities[0] + quantities[1]} - Charge: ${summaryTotal.textContent}`);
+                quantities = [0, 0];
+                document.querySelectorAll('.qty-val').forEach(el => el.textContent = '0');
+                updateSummary();
+                ticketsDrawer.classList.remove('open');
+                ticketsTrigger.classList.remove('active');
+                ticketsArrow.classList.remove('close-state');
+                ticketsArrow.textContent = '';
+            });
+
+            // C. Auto Slide-in for "contact us" Form (since page is non-scrolling)
+            const contactWidget = document.getElementById('contactWidget');
+            setTimeout(() => {
+                contactWidget.classList.add('visible');
+            }, 2000);
+
+            // Handle Contact Submission
+            const contactForm = document.getElementById('contactForm');
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert(`Thank you for contacting OFFSET! We have received your query.`);
+                contactForm.reset();
+            });
+
+            // D. Sound play control
+            const audioToggleBtn = document.getElementById('audioToggleBtn');
+            const audioLabel = audioToggleBtn.querySelector('span');
+
+            audioToggleBtn.addEventListener('click', () => {
+                if (typeof window.toggleOffsetAudio === 'function') {
+                    const isPlaying = window.toggleOffsetAudio();
+                    if (isPlaying) {
+                        audioLabel.textContent = 'Sound On';
+                        audioToggleBtn.classList.add('playing');
+                    } else {
+                        audioLabel.textContent = 'Sound Off';
+                        audioToggleBtn.classList.remove('playing');
+                    }
+                } else {
+                    console.log('Audio loading...');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

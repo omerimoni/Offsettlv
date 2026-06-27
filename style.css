@@ -1,0 +1,731 @@
+/* style.css - OFFSET Disco Festival Website */
+
+/* 1. Imports */
+@import url('https://weareunderdesign.github.io/under/under.css');
+
+/* 2. CSS Design Tokens & Variables */
+:root {
+    /* Fonts */
+    --font-main: 'under';
+
+    /* Colors */
+    --color-bg-pink: #FE62F9;
+    --color-blue: #3941F9;
+    --color-cyan: #04E5FE;
+    --color-black: #000000;
+    --color-white: #FFFFFF;
+    --color-card-bg: #000000;
+    --color-card-text: #FFFFFF;
+
+    /* Alpha/Overlay colors */
+    --color-border-light: rgba(255, 255, 255, 0.2);
+    --color-border-dark: rgba(0, 0, 0, 0.1);
+
+    /* Spacing System */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-8: 48px;
+    --space-10: 64px;
+    --space-12: 96px;
+    --space-16: 128px;
+
+    /* Layout Constants */
+    --grid-margin: var(--space-8);
+    --grid-gap: var(--space-4);
+    --transition-speed: 0.3s;
+}
+
+/* 3. Global Reset & Base Elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    /* allow p5.js canvas to show */
+    font-family: var(--font-main);
+    color: var(--color-white);
+    overflow: hidden;
+}
+
+/* Background p5.js canvas should stay fixed behind content */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Page Wrapper */
+.page-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+/* 4. Grid System (12-Column Layout) */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--grid-gap);
+    padding-left: var(--grid-margin);
+    padding-right: var(--grid-margin);
+    width: 100%;
+}
+
+/* Grid Columns helper */
+.col-1 {
+    grid-column: span 1;
+}
+
+.col-2 {
+    grid-column: span 2;
+}
+
+.col-3 {
+    grid-column: span 3;
+}
+
+.col-4 {
+    grid-column: span 4;
+}
+
+.col-5 {
+    grid-column: span 5;
+}
+
+.col-6 {
+    grid-column: span 6;
+}
+
+.col-7 {
+    grid-column: span 7;
+}
+
+.col-8 {
+    grid-column: span 8;
+}
+
+.col-9 {
+    grid-column: span 9;
+}
+
+.col-10 {
+    grid-column: span 10;
+}
+
+.col-11 {
+    grid-column: span 11;
+}
+
+.col-12 {
+    grid-column: span 12;
+}
+
+/* 5. Header / Navigation Grid */
+.header-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto;
+    background: white;
+    /* grid lines background */
+    gap: 1px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header-cell {
+    background: var(--color-black);
+    padding: var(--space-4) var(--space-5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    /* Allows absolute dropdowns to position relative to each cell dynamically */
+    cursor: pointer;
+    min-height: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: none;
+    /* Align casing strictly with design reference */
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    user-select: none;
+    border: none;
+    color: var(--color-white);
+}
+
+.header-cell:hover {
+    color: var(--color-cyan);
+}
+
+.header-cell .cell-arrow {
+    font-size: 0.85rem;
+}
+
+.arrow-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-image: url('Icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Hover state: Rotate counter-clockwise to point top-right */
+.header-cell:hover .arrow-icon,
+.lineup-link:hover .arrow-icon,
+.widget-header:hover .arrow-icon {
+    transform: rotate(-90deg);
+}
+
+.arrow-icon.close-state {
+    background-image: url('close button.svg');
+    transform: none !important;
+}
+
+.cell-tickets.active .arrow-icon {
+    filter: invert(1);
+}
+
+/* Individual Cell Grid Placements */
+.cell-lineup {
+    grid-column: span 4;
+    grid-row: 1;
+}
+
+.cell-about {
+    grid-column: span 4;
+    grid-row: 2;
+}
+
+.cell-schedule {
+    grid-column: span 4;
+    grid-row: 1;
+}
+
+.cell-community {
+    grid-column: span 4;
+    grid-row: 2;
+}
+
+/* Get Tickets Spans Both Rows */
+.cell-tickets {
+    grid-column: span 4;
+    grid-row: 1 / span 2;
+    background: var(--color-black);
+    font-size: 3.5rem;
+    /* Large oversized menu typography */
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    padding: var(--space-4) var(--space-8);
+    border-left: 1px solid var(--color-border-light);
+    color: var(--color-white);
+    height: 150%;
+}
+
+.cell-tickets-text {
+    margin-bottom: -10px;
+}
+
+.cell-tickets .cell-arrow {
+    font-size: 2.5rem;
+    /* Oversized arrow icon */
+}
+
+.cell-tickets:hover {
+    background: var(--color-black);
+    color: var(--color-white);
+}
+
+.cell-tickets.active {
+    background: var(--color-cyan);
+    color: var(--color-black);
+}
+
+.dropdown-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--color-black);
+    color: var(--color-white);
+    z-index: 999;
+
+    /* Accordion animation using CSS Grid */
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
+    visibility: hidden;
+    overflow: hidden;
+
+    text-transform: none;
+    /* keep normal text case in dropdowns */
+    font-weight: normal;
+    letter-spacing: normal;
+    cursor: default;
+}
+
+/* Inner container that holds the content and padding */
+.dropdown-inner {
+    min-height: 0;
+    padding: var(--space-6);
+    transition: opacity 0.25s ease;
+    opacity: 0;
+}
+
+/* Align dropdowns to their corresponding column splits and set appropriate top offsets */
+.lineup-dropdown {
+    /* Sits directly below Lineup (Row 1), overlaying About */
+    border-right: 1px solid var(--color-border-light);
+}
+
+.about-dropdown {
+    /* Sits below About (Row 2) */
+    border-right: 1px solid var(--color-border-light);
+}
+
+.schedule-dropdown {
+    /* Sits directly below Schedule (Row 1), overlaying Community */
+    border-left: 1px solid var(--color-border-light);
+    border-right: 1px solid var(--color-border-light);
+}
+
+.community-dropdown {
+    /* Sits below Community (Row 2) */
+    border-left: 1px solid var(--color-border-light);
+    border-right: 1px solid var(--color-border-light);
+}
+
+.header-cell:hover .dropdown-panel {
+    grid-template-rows: 1fr;
+    visibility: visible;
+}
+
+.header-cell:hover .dropdown-panel .dropdown-inner {
+    opacity: 1;
+}
+
+/* Lineup Dropdown Styling */
+.lineup-list {
+    list-style: none;
+}
+
+.lineup-item {
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.lineup-item:last-child {
+    border-bottom: none;
+}
+
+.lineup-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-4) 0;
+    color: var(--color-white);
+    text-decoration: none;
+    font-size: 2rem;
+    /* Large oversized artist list typography */
+    font-weight: 700;
+    text-transform: none;
+    /* TommyB, Ariel Druker, etc. */
+    transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+.lineup-link:hover {
+    color: var(--color-cyan);
+    padding-left: var(--space-2);
+}
+
+/* General Dropdown Paragraphs */
+.dropdown-text {
+    font-size: 0.95rem;
+    line-height: 153%;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.about-dropdown .dropdown-text,
+.community-dropdown .dropdown-text {
+    font-weight: 600;
+}
+
+/* Schedule Dropdown Styling */
+.schedule-dropdown h4 {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    margin-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-white);
+    padding-bottom: var(--space-2);
+    letter-spacing: 0.05em;
+}
+
+.schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.schedule-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: var(--space-3);
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding: var(--space-2) 0;
+}
+
+.schedule-time {
+    font-weight: 700;
+    color: var(--color-cyan);
+}
+
+.schedule-event {
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 600;
+}
+
+/* 7. Tickets Checkout Sliding Drawer */
+.tickets-drawer {
+    position: fixed;
+    top: 120px;
+    /* height of header cells (2 rows of 60px) */
+    right: 0;
+    width: 33.333%;
+    /* aligns with equal Column 3 */
+    height: calc(100vh - 120px);
+    background: var(--color-black);
+    border-left: 1px solid var(--color-border-light);
+    padding: var(--space-8) var(--space-10);
+    z-index: 950;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.tickets-drawer.open {
+    transform: translateX(0);
+}
+
+.tickets-header {
+    border-bottom: 1px solid var(--color-white);
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.tickets-header h3 {
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tickets-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.ticket-card {
+    background: #000000;
+    border: 1px solid var(--color-border-light);
+    padding: var(--space-5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 4px;
+    transition: border-color var(--transition-speed);
+}
+
+.ticket-card:hover {
+    border-color: var(--color-cyan);
+}
+
+.ticket-info h4 {
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    margin-bottom: var(--space-1);
+}
+
+.ticket-info p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.ticket-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-cyan);
+    margin-top: var(--space-2);
+}
+
+.ticket-qty-control {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.qty-btn {
+    background: transparent;
+    border: 1px solid var(--color-white);
+    color: var(--color-white);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.qty-btn:hover {
+    background: var(--color-white);
+    color: var(--color-black);
+}
+
+.qty-val {
+    font-size: 1.25rem;
+    font-weight: 600;
+    min-width: 20px;
+    text-align: center;
+}
+
+.tickets-summary {
+    border-top: 1px solid var(--color-border-light);
+    padding-top: var(--space-6);
+    margin-top: var(--space-8);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    margin-bottom: var(--space-3);
+}
+
+.summary-total {
+    font-size: 1.6rem;
+    font-weight: bold;
+    border-top: 1px solid var(--color-white);
+    padding-top: var(--space-4);
+    margin-top: var(--space-3);
+}
+
+.summary-total span:last-child {
+    color: var(--color-cyan);
+}
+
+.checkout-btn {
+    width: 100%;
+    background: var(--color-cyan);
+    color: var(--color-black);
+    border: none;
+    padding: var(--space-4);
+    font-family: var(--font-main);
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0%;
+    cursor: pointer;
+    margin-top: var(--space-6);
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.checkout-btn:hover {
+    background: var(--color-white);
+    transform: translateY(-2px);
+}
+
+.checkout-btn:active {
+    transform: translateY(0);
+}
+
+/* 8. Hero Section */
+.hero-section {
+    min-height: 100vh;
+    /* Hero section takes exactly fullscreen height */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 150px;
+    /* clearance for fixed header */
+    padding-bottom: var(--space-8);
+    position: relative;
+}
+
+.scroll-spacer {
+    height: 40vh;
+    /* space to scroll into */
+    background: transparent;
+    pointer-events: none;
+}
+
+.hero-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding: var(--space-10) 0;
+}
+
+.hero-logo {
+    max-width: 80%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.15));
+    animation: pulseLogo 6s ease-in-out infinite alternate;
+}
+
+@keyframes pulseLogo {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.03);
+    }
+}
+
+.hero-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.hero-info {
+    font-size: 1.6rem;
+    font-weight: 1000;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-black);
+}
+
+.hero-info span {
+    display: block;
+}
+
+.hero-info .festival-date {
+    font-weight: 1000;
+    color: var(--color-black);
+    font-size: 58;
+    margin-top: var(--space-2);
+}
+
+/* Audio Floating Toggle Control */
+.audio-control-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.audio-btn {
+    background: var(--color-black);
+    color: var(--color-white);
+    border: 1px solid var(--color-border-light);
+    padding: var(--space-3) var(--space-5);
+    font-family: var(--font-main);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.audio-btn:hover {
+    border-color: var(--color-cyan);
+    color: var(--color-cyan);
+}
+
+.audio-btn .sound-waves {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    width: 16px;
+    height: 12px;
+}
+
+.audio-btn .wave {
+    background: currentColor;
+    width: 2px;
+    height: 100%;
+    transform-origin: bottom;
+    animation: waveAnim 1s ease-in-out infinite alternate;
+    animation-play-state: paused;
+}
+
+.audio-btn.playing .wave {
+    animation-play-state: running;
+}
+
+.audio-btn .wave:nth-child(2) {
+    animation-delay: 0.2s;
+    height: 60%;
+}
+
+.audio-btn .wave:nth-child(3) {
+    animation-delay: 0.4s;
+    height: 80%;
+}
+
+@keyframes waveAnim {
+    0% {
+        transform: scaleY(0.2);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
